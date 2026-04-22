@@ -13,6 +13,8 @@ let state = {
   tags: [],
   heatmapColor: "roxo",
   goals: { day: 120, week: 840 },
+  subjectGoals: {},
+  lastBackupAt: null,
   pomodoro: { focus: 25, shortBreak: 5, longBreak: 15, longBreakEvery: 4 },
 };
 
@@ -26,6 +28,10 @@ function migrateState() {
   state.goals.week = Number(state.goals.week) || state.goals.day * 7;
   if (state.goals.day <= 24) state.goals.day *= 60;
   if (state.goals.week <= 168) state.goals.week *= 60;
+  state.subjectGoals =
+    state.subjectGoals && typeof state.subjectGoals === "object"
+      ? state.subjectGoals
+      : {};
   state.pomodoro = Object.assign(
     { focus: 25, shortBreak: 5, longBreak: 15, longBreakEvery: 4 },
     state.pomodoro || {},
@@ -41,6 +47,7 @@ function migrateState() {
   );
   state.xp = Number(state.xp) || 0;
   state.heatmapColor = state.heatmapColor || "roxo";
+  state.lastBackupAt = state.lastBackupAt || null;
 }
 function loadState() {
   try {
@@ -51,6 +58,11 @@ function loadState() {
 }
 function saveState() {
   try {
-    localStorage.setItem("focusflow_v4", JSON.stringify(state));
+    const serialized = JSON.stringify(state);
+    localStorage.setItem("focusflow_v4", serialized);
+    localStorage.setItem(
+      "focusflow_v4_auto_backup",
+      JSON.stringify({ createdAt: new Date().toISOString(), state }),
+    );
   } catch (e) {}
 }

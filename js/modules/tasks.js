@@ -143,6 +143,7 @@ function saveTask() {
   }
   renderTasks();
   closeModal("task-modal");
+  updateOnboarding();
 }
 function updateTaskStatus(id, status) {
   const t = state.tasks.find((t) => t.id == id);
@@ -157,6 +158,7 @@ function deleteTask(id) {
   state.tasks = state.tasks.filter((t) => t.id != id);
   saveState();
   renderTasks();
+  updateOnboarding();
   showToast("🗑 Tarefa removida", "warn");
 }
 function handleDragStart(e, id) {

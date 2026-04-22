@@ -6,6 +6,7 @@ function registerServiceWorker() {
     navigator.serviceWorker.register("sw.js").catch(() => {});
   }
 }
+let deferredInstallPrompt = null;
 function setupAppEvents() {
   document.addEventListener("click", (e) => {
     const closeBtn = e.target.closest("[data-close-modal]");
@@ -75,6 +76,11 @@ function setupAppEvents() {
       "open-import": () => document.getElementById("import-file").click(),
       "clear-data": () => clearAllData(),
       "save-preferences": () => savePreferences(),
+      "load-sample-data": () => loadSampleData(),
+      "export-weekly-report": () => exportWeeklyReport(),
+      "add-subject-goal": () => addSubjectGoal(),
+      "remove-subject-goal": () => updateSubjectGoal(id, 0),
+      "install-app": () => installApp(),
     };
     if (actions[actionBtn.dataset.action]) actions[actionBtn.dataset.action]();
   });
@@ -96,6 +102,22 @@ function setupAppEvents() {
   document
     .getElementById("import-file")
     ?.addEventListener("change", (e) => importData(e.target));
+  document.addEventListener("change", (e) => {
+    const select = e.target.closest("[data-subject-goal-select]");
+    if (select) {
+      const oldId = select.dataset.subjectGoalSelect;
+      const value = state.subjectGoals[oldId];
+      delete state.subjectGoals[oldId];
+      state.subjectGoals[select.value] = value;
+      saveState();
+      renderSubjectGoalsSettings();
+      renderSubjectGoalsDashboard();
+      return;
+    }
+    const minutes = e.target.closest("[data-subject-goal-minutes]");
+    if (minutes)
+      updateSubjectGoal(minutes.dataset.subjectGoalMinutes, minutes.value);
+  });
   const taskList = document.getElementById("task-list");
   taskList?.addEventListener("dragover", (e) => e.preventDefault());
   taskList?.addEventListener("drop", handleDrop);
@@ -108,9 +130,33 @@ function setupAppEvents() {
     if (item) handleDragEnd(e);
   });
 }
+function setupInstallPrompt() {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const btn = document.getElementById("install-prompt");
+    if (btn) btn.hidden = false;
+  });
+}
+function installApp() {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt = null;
+  document.getElementById("install-prompt").hidden = true;
+}
+function setupBeforeUnloadWarning() {
+  window.addEventListener("beforeunload", (e) => {
+    if (!sess.running) return;
+    persistActiveSession();
+    e.preventDefault();
+    e.returnValue = "";
+  });
+}
 function init() {
   loadState();
   setupAppEvents();
+  setupInstallPrompt();
+  setupBeforeUnloadWarning();
   const focus = getPomoSeconds("focus");
   pomo.remaining = focus;
   pomo.baseRemaining = focus;
@@ -136,6 +182,8 @@ function init() {
     selectedBtn.style.borderWidth = "2px";
     selectedBtn.style.borderColor = HEATMAP_COLORS[state.heatmapColor].base;
   }
+  restoreActiveSession();
+  updateOnboarding();
   setInterval(() => {
     updateDailyProgress();
   }, 60000);

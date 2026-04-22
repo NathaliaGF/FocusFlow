@@ -119,6 +119,42 @@ function pomoReset() {
 
 let sess = { running: false, startTs: null, elapsed: 0, interval: null };
 let pendingSessionMs = 0;
+function persistActiveSession() {
+  if (!sess.running) {
+    sessionStorage.removeItem("focusflow_active_session");
+    return;
+  }
+  sessionStorage.setItem(
+    "focusflow_active_session",
+    JSON.stringify({ startTs: sess.startTs, elapsed: sess.elapsed }),
+  );
+}
+function restoreActiveSession() {
+  try {
+    const raw = sessionStorage.getItem("focusflow_active_session");
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved.startTs) return;
+    sess.startTs = Number(saved.startTs);
+    sess.elapsed = Number(saved.elapsed) || 0;
+    sess.running = true;
+    sess.interval = setInterval(() => {
+      const cur = sess.elapsed + (Date.now() - sess.startTs);
+      document.getElementById("session-display").textContent = formatMs(cur);
+      document.getElementById("focus-timer-display").textContent =
+        formatMs(cur);
+      persistActiveSession();
+    }, 500);
+    document.getElementById("sess-start-btn").style.display = "none";
+    document.getElementById("sess-end-btn").style.display = "";
+    document.getElementById("focus-start-btn").style.display = "none";
+    document.getElementById("focus-end-btn").style.display = "";
+    document.getElementById("session-status").textContent =
+      "🟢 Sessão restaurada...";
+  } catch (e) {
+    sessionStorage.removeItem("focusflow_active_session");
+  }
+}
 function sessStart() {
   if (sess.running) return;
   sess.startTs = Date.now();
@@ -128,12 +164,14 @@ function sessStart() {
     const cur = sess.elapsed + (Date.now() - sess.startTs);
     document.getElementById("session-display").textContent = formatMs(cur);
     document.getElementById("focus-timer-display").textContent = formatMs(cur);
+    persistActiveSession();
   }, 500);
   document.getElementById("sess-start-btn").style.display = "none";
   document.getElementById("sess-end-btn").style.display = "";
   document.getElementById("focus-start-btn").style.display = "none";
   document.getElementById("focus-end-btn").style.display = "";
   document.getElementById("session-status").textContent = "🟢 Estudando...";
+  persistActiveSession();
 }
 function sessEnd() {
   if (!sess.running) return;
@@ -152,6 +190,7 @@ function sessEnd() {
   populateSessionModal();
   document.getElementById("session-modal").classList.add("open");
   sess = { running: false, startTs: null, elapsed: 0, interval: null };
+  sessionStorage.removeItem("focusflow_active_session");
 }
 function populateSessionModal() {
   const ts = document.getElementById("session-task-select");
@@ -199,11 +238,13 @@ function saveSession() {
   }
   state.xp += Math.max(1, mins);
   pendingSessionMs = 0;
+  sessionStorage.removeItem("focusflow_active_session");
   saveState();
   document.getElementById("session-notes").value = "";
   closeModal("session-modal");
   updateXP();
   updateDashboard();
   renderHistory();
+  updateOnboarding();
   showToast(`✅ ${formatDuration(ms)} salvos!`, "success");
 }

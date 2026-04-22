@@ -140,6 +140,9 @@ body {
   gap: 2px;
   flex-shrink: 0;
 }
+.mobile-nav {
+  display: none;
+}
 .header {
   display: flex;
   align-items: center;
@@ -642,6 +645,101 @@ body {
   color: var(--text3);
   font-size: 14px;
 }
+.onboarding-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--bg2);
+  border: 1px solid rgba(124, 106, 247, 0.28);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.onboarding-panel[hidden] {
+  display: none;
+}
+.onboarding-panel h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+.onboarding-panel p {
+  color: var(--text2);
+  font-size: 13px;
+  max-width: 560px;
+}
+.onboarding-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.backup-status {
+  margin-top: 12px;
+  color: var(--text2);
+  font-size: 12px;
+}
+.subject-goal-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) 120px auto;
+  gap: 8px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+.subject-goal-progress {
+  margin-bottom: 12px;
+}
+.subject-goal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.install-prompt {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9000;
+  border: 1px solid rgba(124, 106, 247, 0.4);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 100px;
+  padding: 10px 16px;
+  font-family: var(--font);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.install-prompt[hidden] {
+  display: none;
+}
+.offline-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.offline-card {
+  max-width: 460px;
+  text-align: center;
+}
+.offline-card .logo {
+  border: 0;
+  padding: 0;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.offline-card h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.offline-card p {
+  color: var(--text2);
+  margin-bottom: 18px;
+}
 .toast {
   position: fixed;
   bottom: 24px;
@@ -848,6 +946,9 @@ body {
   }
 }
 @media (max-width: 768px) {
+  body {
+    padding-bottom: 76px;
+  }
   .grid-2,
   .grid-3 {
     grid-template-columns: 1fr;
@@ -858,17 +959,24 @@ body {
   .header {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 16px;
   }
   .header-right {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
   }
   .sidebar {
     transform: translateX(-240px);
     z-index: 101;
   }
+  .menu-btn {
+    display: none;
+  }
   .main {
     margin-left: 0;
+    padding: 16px;
   }
   .main.full {
     margin-left: 0;
@@ -879,5 +987,113 @@ body {
   .modal {
     width: 90%;
     max-width: 100%;
+  }
+  .mobile-nav {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 800;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    background: rgba(22, 22, 26, 0.96);
+    border: 1px solid var(--border2);
+    border-radius: 14px;
+    padding: 7px;
+    backdrop-filter: blur(12px);
+  }
+  .mobile-nav-item {
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text2);
+    border-radius: 10px;
+    font-family: var(--font);
+    padding: 7px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .mobile-nav-item span {
+    font-size: 17px;
+    line-height: 1;
+  }
+  .mobile-nav-item small {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+  .mobile-nav-item.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .card,
+  .stat-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .card-title {
+    margin-bottom: 12px;
+  }
+  .timer-display {
+    font-size: 42px;
+    letter-spacing: -1px;
+  }
+  .focus-timer {
+    font-size: 54px;
+    letter-spacing: -2px;
+  }
+  .stopwatch-main {
+    min-height: 150px;
+  }
+  .task-item,
+  .history-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .task-title,
+  .history-meta {
+    min-width: 180px;
+  }
+  .task-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .task-actions .btn.small {
+    min-width: 40px;
+    min-height: 36px;
+    padding: 7px 10px;
+  }
+  .history-duration {
+    min-width: auto;
+  }
+  .section-header {
+    align-items: stretch;
+  }
+  .section-header > .btn,
+  .section-header > button {
+    width: 100%;
+  }
+  .onboarding-panel {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .onboarding-actions {
+    justify-content: stretch;
+  }
+  .onboarding-actions .btn {
+    flex: 1 1 140px;
+  }
+  .subject-goal-row {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .install-prompt {
+    right: 16px;
+    bottom: 86px;
   }
 }

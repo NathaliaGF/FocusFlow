@@ -64,6 +64,7 @@ function saveWikiItem() {
   }
   saveState();
   renderWiki();
+  updateOnboarding();
   closeModal("wiki-modal");
 }
 function deleteWikiItem(id) {
@@ -71,6 +72,7 @@ function deleteWikiItem(id) {
   state.wikiItems = state.wikiItems.filter((w) => w.id != id);
   saveState();
   renderWiki();
+  updateOnboarding();
   showToast("🗑 Item removido", "warn");
 }
 function renderWiki() {

@@ -14,6 +14,11 @@ FocusFlow é um app local de estudos feito com HTML, CSS e JavaScript puro. Ele 
 - Histórico com filtro por matéria, data, busca, edição e exclusão de sessões.
 - Dashboard com hoje, semana, streak, total, melhor dia, matéria mais estudada, sessão média, gráfico de 7 dias e heatmap anual.
 - Exportação/importação de backup JSON.
+- Relatório semanal exportável em Markdown.
+- Snapshot automático em `localStorage` a cada salvamento.
+- Onboarding inicial com dados de exemplo.
+- Navegação mobile inferior.
+- Metas semanais por matéria.
 - PWA com `manifest.webmanifest` e `sw.js`.
 
 ## Como Rodar
@@ -40,8 +45,10 @@ css/styles.css             Estilos do app
 js/app.js                  Entrada, eventos e inicialização
 js/modules/                Estado, timers, tarefas, wiki, dashboard e UI
 vendor/chart.umd.min.js    Chart.js local para gráficos
+assets/icons/              Ícones PNG do PWA
 manifest.webmanifest       Manifest do PWA
 sw.js                      Service Worker
+offline.html               Página offline amigável
 docs/assets/screenshot.svg Preview usado no README
 legacy/                    Arquivos antigos preservados
 tests/                     Testes básicos com Playwright
@@ -115,8 +122,6 @@ Settings > Pages > Build and deployment > Source: GitHub Actions
 - Baixar fontes para uso 100% local/offline desde o primeiro carregamento.
 - Melhorar o layout mobile com navegação inferior.
 - Adicionar revisão espaçada na Wiki.
-- Adicionar metas por matéria.
-- Exportar relatório semanal em Markdown.
 - Criar migração versionada com `schemaVersion`.
 - Aumentar a cobertura dos testes Playwright.
 - Refinar a modularização com ES modules quando houver uma etapa de build ou suporte explícito.

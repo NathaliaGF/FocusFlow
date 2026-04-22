@@ -11,6 +11,16 @@ Todas as mudanças relevantes do FocusFlow serão documentadas neste arquivo.
 - Handlers inline removidos do HTML em favor de delegação por `data-action`.
 - JavaScript dividido em módulos por domínio em `js/modules/`.
 
+## 4.4.0 - 2026-04-22
+
+- Navegação inferior para mobile.
+- Cards e ações de tarefa/histórico ajustados para telas pequenas.
+- Onboarding inicial com ações rápidas e dados de exemplo.
+- Aviso antes de sair com sessão em andamento e restauração via `sessionStorage`.
+- Lembrete de último backup e exportação de relatório semanal em Markdown.
+- Ícones PWA reais em PNG e página offline amigável.
+- Metas semanais por matéria com progresso no dashboard.
+
 ## 4.3.0 - 2026-04-22
 
 - Separação do app em `index.html`, `css/styles.css` e JavaScript externo.

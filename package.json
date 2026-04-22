@@ -1,6 +1,6 @@
 {
   "name": "focusflow",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "private": true,
   "description": "App local de estudos com temporizadores, tarefas, wiki pessoal e dashboard de produtividade.",
   "scripts": {

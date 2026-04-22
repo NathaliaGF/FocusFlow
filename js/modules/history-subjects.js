@@ -40,6 +40,8 @@ function renderSubjects() {
         `<div class="subject-item"><div class="color-dot" style="background:${s.color}"></div><span style="flex:1;font-weight:600">${sanitizeHTML(s.name)}</span><button class="btn small" data-action="open-subject" data-id="${s.id}">✏️</button><button class="btn small danger" data-action="delete-subject" data-id="${s.id}">🗑</button></div>`,
     )
     .join("");
+  renderSubjectGoalsSettings();
+  renderSubjectGoalsDashboard();
 }
 function openSubjectModal(id = null) {
   state.editingSubjectId = id;
@@ -77,15 +79,87 @@ function saveSubject() {
   saveState();
   renderSubjects();
   updateSubjectFilter();
+  renderSubjectGoalsSettings();
   closeModal("subject-modal");
+  updateOnboarding();
 }
 function deleteSubject(id) {
   if (!confirm("⚠️ Deletar esta matéria?")) return;
   state.subjects = state.subjects.filter((s) => s.id != id);
+  delete state.subjectGoals[id];
   saveState();
   renderSubjects();
   updateSubjectFilter();
+  updateOnboarding();
   showToast("🗑 Matéria removida", "warn");
+}
+function addSubjectGoal() {
+  if (!state.subjects.length) {
+    showToast("Crie uma matéria antes de definir metas.", "warn");
+    openSubjectModal();
+    return;
+  }
+  const next = state.subjects.find((s) => !state.subjectGoals[s.id]);
+  if (!next) {
+    showToast("Todas as matérias já têm meta.", "info");
+    return;
+  }
+  state.subjectGoals[next.id] = 120;
+  saveState();
+  renderSubjectGoalsSettings();
+  renderSubjectGoalsDashboard();
+}
+function updateSubjectGoal(id, minutes) {
+  const value = clampNumber(minutes, 0, 10080, 0);
+  if (value <= 0) delete state.subjectGoals[id];
+  else state.subjectGoals[id] = value;
+  saveState();
+  renderSubjectGoalsSettings();
+  renderSubjectGoalsDashboard();
+}
+function renderSubjectGoalsSettings() {
+  const box = document.getElementById("subject-goals-settings");
+  if (!box) return;
+  if (!state.subjects.length) {
+    box.innerHTML =
+      '<div class="empty">Crie uma matéria para definir metas</div>';
+    return;
+  }
+  const selected = new Set(Object.keys(state.subjectGoals || {}));
+  const rows = [...selected]
+    .filter((id) => state.subjects.some((s) => String(s.id) === String(id)))
+    .map((id) => {
+      const subject = state.subjects.find((s) => String(s.id) === String(id));
+      return `<div class="subject-goal-row"><div class="form-group"><label>Matéria</label><select data-subject-goal-select="${id}">${state.subjects.map((s) => `<option value="${s.id}" ${String(s.id) === String(id) ? "selected" : ""}>${sanitizeHTML(s.name)}</option>`).join("")}</select></div><div class="form-group"><label>Meta semanal (min)</label><input type="number" min="0" max="10080" value="${state.subjectGoals[id]}" data-subject-goal-minutes="${id}"></div><button class="btn small danger" data-action="remove-subject-goal" data-id="${id}">Remover</button></div>`;
+    })
+    .join("");
+  box.innerHTML = rows || '<div class="empty">Nenhuma meta configurada</div>';
+}
+function renderSubjectGoalsDashboard() {
+  const box = document.getElementById("subject-goals-dashboard");
+  if (!box) return;
+  const goals = Object.entries(state.subjectGoals || {}).filter(
+    ([, min]) => min > 0,
+  );
+  if (!goals.length) {
+    box.innerHTML =
+      '<div class="empty">Nenhuma meta por matéria definida</div>';
+    return;
+  }
+  const week = getThisWeekSessions();
+  box.innerHTML = goals
+    .map(([id, goalMin]) => {
+      const subject = state.subjects.find((s) => String(s.id) === String(id));
+      if (!subject) return "";
+      const doneMin = Math.round(
+        week
+          .filter((s) => String(s.subjId) === String(id))
+          .reduce((a, b) => a + b.duration, 0) / 60000,
+      );
+      const pct = Math.min(100, Math.round((doneMin / goalMin) * 100));
+      return `<div class="subject-goal-progress"><div class="subject-goal-head"><span>${sanitizeHTML(subject.name)}</span><strong>${doneMin}/${goalMin}min</strong></div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${subject.color}"></div></div></div>`;
+    })
+    .join("");
 }
 function openSessionModal(id) {
   const s = state.sessions.find((x) => x.id == id);
@@ -150,6 +224,7 @@ function deleteSession(id) {
   updateDashboard();
   renderHistory();
   renderTasks();
+  updateOnboarding();
   showToast("🗑 Sessão removida", "warn");
 }
 function recalculateXPFromSessions() {

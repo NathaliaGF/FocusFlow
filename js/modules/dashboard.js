@@ -155,6 +155,7 @@ function updateDashboard() {
   document.getElementById("dash-streak").textContent = streak + "🔥";
   document.getElementById("dash-total").textContent = formatDuration(totalMs);
   updateDashboardInsights();
+  renderSubjectGoalsDashboard();
   updateDailyProgress();
   buildWeekChart();
   renderHeatmap();

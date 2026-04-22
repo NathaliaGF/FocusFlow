@@ -54,6 +54,24 @@
       </div>
     </aside>
 
+    <nav class="mobile-nav" aria-label="Navegação principal mobile">
+      <button class="mobile-nav-item active" data-page="home">
+        <span>⏱</span><small>Timer</small>
+      </button>
+      <button class="mobile-nav-item" data-page="tasks">
+        <span>📋</span><small>Tarefas</small>
+      </button>
+      <button class="mobile-nav-item" data-page="wiki">
+        <span>📚</span><small>Wiki</small>
+      </button>
+      <button class="mobile-nav-item" data-page="dashboard">
+        <span>📊</span><small>Dados</small>
+      </button>
+      <button class="mobile-nav-item" data-page="settings">
+        <span>⚙️</span><small>Ajustes</small>
+      </button>
+    </nav>
+
     <main class="main" id="main">
       <div class="header">
         <div class="header-left">
@@ -106,6 +124,29 @@
           </button>
         </div>
       </div>
+
+      <section class="onboarding-panel" id="onboarding-panel" hidden>
+        <div>
+          <div class="card-title">Primeiros passos</div>
+          <h2>Monte seu fluxo de estudos</h2>
+          <p>
+            Crie uma matéria, registre uma tarefa e comece a primeira sessão
+            para liberar os gráficos e histórico.
+          </p>
+        </div>
+        <div class="onboarding-actions">
+          <button class="btn primary" data-action="open-subject">
+            Criar matéria
+          </button>
+          <button class="btn" data-action="open-task">Criar tarefa</button>
+          <button class="btn success" data-action="sess-start">
+            Iniciar sessão
+          </button>
+          <button class="btn amber" data-action="load-sample-data">
+            Carregar exemplo
+          </button>
+        </div>
+      </section>
 
       <!-- HOME -->
       <div class="page active" id="page-home">
@@ -584,6 +625,15 @@
             <span style="color: var(--text3)">Mais</span>
           </div>
         </div>
+        <div class="card subject-goals-card" style="margin-top: 20px">
+          <div class="section-header">
+            <h2>Metas por matéria</h2>
+            <button class="btn small" data-page="settings">Configurar</button>
+          </div>
+          <div id="subject-goals-dashboard">
+            <div class="empty">Nenhuma meta por matéria definida</div>
+          </div>
+        </div>
       </div>
 
       <!-- SUBJECTS -->
@@ -610,6 +660,14 @@
           /><button class="btn danger" data-action="clear-data">
             🗑 Apagar tudo
           </button>
+          <div class="backup-status" id="backup-status">
+            Nenhum backup exportado neste navegador.
+          </div>
+          <div class="btn-row" style="margin-top: 12px">
+            <button class="btn" data-action="export-weekly-report">
+              Exportar relatório semanal (.md)
+            </button>
+          </div>
         </div>
         <div class="card" style="margin-top: 16px">
           <div class="card-title">⏱ Pomodoro & Metas</div>
@@ -634,6 +692,15 @@
           <button class="btn primary" data-action="save-preferences">
             Salvar preferências
           </button>
+        </div>
+        <div class="card" style="margin-top: 16px">
+          <div class="section-header">
+            <h2>🎯 Metas por matéria</h2>
+            <button class="btn small" data-action="add-subject-goal">
+              + Meta
+            </button>
+          </div>
+          <div id="subject-goals-settings"></div>
         </div>
         <div class="card" style="margin-top: 16px">
           <div class="card-title">🎨 Personalização</div>
@@ -903,6 +970,14 @@
       style="display: none"
     ></canvas>
     <div class="toast" id="toast"></div>
+    <button
+      class="install-prompt"
+      id="install-prompt"
+      data-action="install-app"
+      hidden
+    >
+      Instalar app
+    </button>
 
     <script src="js/modules/state.js"></script>
     <script src="js/modules/utils.js"></script>

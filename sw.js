@@ -1,4 +1,4 @@
-const CACHE_NAME = "focusflow-v4.3.1";
+const CACHE_NAME = "focusflow-v4.4.0";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -14,6 +14,9 @@ const APP_SHELL = [
   "./js/modules/ui.js",
   "./vendor/chart.umd.min.js",
   "./manifest.webmanifest",
+  "./offline.html",
+  "./assets/icons/icon-192.png",
+  "./assets/icons/icon-512.png",
   "./README.md",
 ];
 
@@ -56,7 +59,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() => {
           if (event.request.mode === "navigate")
-            return caches.match("./index.html");
+            return caches.match("./offline.html");
           return new Response("Offline", {
             status: 503,
             statusText: "Offline",
