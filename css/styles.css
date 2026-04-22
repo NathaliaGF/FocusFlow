@@ -322,6 +322,10 @@ body {
 .pomodoro-ring-wrap svg {
   transform: rotate(-90deg);
 }
+.pomodoro-actions {
+  justify-content: center;
+  width: 100%;
+}
 .ring-bg {
   fill: none;
   stroke: var(--bg3);
