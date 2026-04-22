@@ -1,0 +1,15 @@
+{
+  "name": "focusflow",
+  "version": "4.3.1",
+  "private": true,
+  "description": "App local de estudos com temporizadores, tarefas, wiki pessoal e dashboard de produtividade.",
+  "scripts": {
+    "start": "python3 -m http.server 8090",
+    "test": "playwright test",
+    "format": "prettier --write \"**/*.{html,css,js,json,md,yml}\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "prettier": "^3.2.5"
+  }
+}

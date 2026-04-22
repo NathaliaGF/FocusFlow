@@ -1,0 +1,19 @@
+{
+  "name": "FocusFlow",
+  "short_name": "FocusFlow",
+  "description": "App local de estudos com temporizadores, tarefas, wiki e dashboard.",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./index.html",
+  "background_color": "#0e0e10",
+  "theme_color": "#7c6af7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%237c6af7' width='192' height='192'/%3E%3Ctext x='50%25' y='54%25' font-size='100' fill='white' text-anchor='middle'%3EFF%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

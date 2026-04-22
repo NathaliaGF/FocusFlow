@@ -1,0 +1,158 @@
+{
+  "tasks": [
+    {
+      "id": 1712000000000,
+      "title": "Estudar Cálculo Diferencial",
+      "subjectId": 1711900000000,
+      "status": "pending",
+      "timeSpent": 3600000,
+      "createdAt": "2026-04-10T08:00:00.000Z"
+    },
+    {
+      "id": 1712000000001,
+      "title": "Resolver exercícios de Álgebra",
+      "subjectId": 1711900000000,
+      "status": "done",
+      "timeSpent": 5400000,
+      "createdAt": "2026-04-09T10:30:00.000Z"
+    },
+    {
+      "id": 1712000000002,
+      "title": "Ler capítulo 5 de Química",
+      "subjectId": 1711900000001,
+      "status": "postponed",
+      "timeSpent": 0,
+      "createdAt": "2026-04-10T09:15:00.000Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": 1712100000000,
+      "date": "2026-04-10",
+      "hour": 14,
+      "duration": 3600000,
+      "taskId": 1712000000000,
+      "subjId": 1711900000000,
+      "notes": "Estudei derivadas e regra da cadeia"
+    },
+    {
+      "id": 1712100000001,
+      "date": "2026-04-09",
+      "hour": 10,
+      "duration": 5400000,
+      "taskId": 1712000000001,
+      "subjId": 1711900000000,
+      "notes": "Completei exercícios 1-10 do capítulo 3"
+    },
+    {
+      "id": 1712100000002,
+      "date": "2026-04-09",
+      "hour": 17,
+      "duration": 2700000,
+      "taskId": "",
+      "subjId": 1711900000001,
+      "notes": "Revisão geral de reações químicas"
+    },
+    {
+      "id": 1712100000003,
+      "date": "2026-04-08",
+      "hour": 9,
+      "duration": 1800000,
+      "taskId": "",
+      "subjId": 1711900000002,
+      "notes": "Leitura do resumo de Literatura"
+    },
+    {
+      "id": 1712100000004,
+      "date": "2026-04-07",
+      "hour": 15,
+      "duration": 4500000,
+      "taskId": "",
+      "subjId": 1711900000000,
+      "notes": "Pomodoros de Matemática"
+    }
+  ],
+  "subjects": [
+    {
+      "id": 1711900000000,
+      "name": "Matemática",
+      "color": "#7c6af7",
+      "notes": ""
+    },
+    {
+      "id": 1711900000001,
+      "name": "Química",
+      "color": "#3ecf8e",
+      "notes": ""
+    },
+    {
+      "id": 1711900000002,
+      "name": "Literatura",
+      "color": "#f5a623",
+      "notes": ""
+    }
+  ],
+  "wikiItems": [
+    {
+      "id": 1711800000000,
+      "title": "Regra da Cadeia",
+      "category": "conteudo",
+      "content": "Se f(x) = (g(h(x))), então f'(x) = g'(h(x)) · h'(x). Exemplo: se f(x) = (2x+1)³, então g(u) = u³ e h(x) = 2x+1.",
+      "links": [
+        "https://www.khanacademy.org/math/calculus-1/cs1-derivatives/cs1-chain-rule/a/chain-rule-review"
+      ],
+      "subjectId": 1711900000000,
+      "createdAt": "2026-04-09T14:30:00.000Z",
+      "updatedAt": "2026-04-09T14:30:00.000Z"
+    },
+    {
+      "id": 1711800000001,
+      "title": "Reações Ácido-Base",
+      "category": "revisar",
+      "content": "- Ácido forte: HCl, HNO₃, H₂SO₄\n- Base forte: NaOH, KOH\n- pH + pOH = 14\n- Ka e Kb devem ser memorizados",
+      "links": ["https://www.youtube.com/watch?v=Aq8eD0gJJDA"],
+      "subjectId": 1711900000001,
+      "createdAt": "2026-04-08T10:00:00.000Z",
+      "updatedAt": "2026-04-08T10:00:00.000Z"
+    },
+    {
+      "id": 1711800000002,
+      "title": "Recursos de Estudo",
+      "category": "links",
+      "content": "Coleção de links úteis para estudo",
+      "links": [
+        "https://www.khan-academy.org",
+        "https://www.coursera.org",
+        "https://brilliant.org"
+      ],
+      "subjectId": "",
+      "createdAt": "2026-04-07T12:00:00.000Z",
+      "updatedAt": "2026-04-07T12:00:00.000Z"
+    }
+  ],
+  "goals": {
+    "day": 2,
+    "week": 14
+  },
+  "xp": 450,
+  "clockVisible": true,
+  "achievements": {
+    "first_session": true,
+    "ten_hours": false,
+    "streak_7": false,
+    "pomo_10": true
+  },
+  "challenges": {
+    "weekReset": "2026-04-07",
+    "progress": {
+      "diff_subjects": 3,
+      "pomo_10": 8,
+      "early_bird_challenge": 1,
+      "study_streak_5": 2,
+      "session_15": 5
+    }
+  },
+  "taskOrder": [],
+  "lastWeeklyReport": null,
+  "_celebratedToday": false
+}
